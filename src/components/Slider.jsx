@@ -32,7 +32,7 @@ const Arrow = styled.div`
 const Wrapper = styled.div`
   height: 100%;
   display: flex;
-  transform: translateX(${(props)=> props.slideIndex * -100} vw);
+  transform: translateX(${props=> props.slideIndex * -100}vw);
 `;
 const Slide =styled.div`
   width: 100vw;
@@ -47,7 +47,7 @@ const ImgContainer =styled.div`
 `;
 const Image = styled.img`
   height: 100%;
-  width: 140vh
+  width: 100%
 
 `;
 const InfoContainer =styled.div`
@@ -80,14 +80,16 @@ const Button = styled.button`
 
 const Slider = () => {
 
-  const [slideIndex, setSlideIndex] = useState(0)
+  const [slideIndex, setSlideIndex] = useState(0);
+
   const handleClick = (direction) => {
     if(direction === "left"){
-      setSlideIndex(slideIndex > 0 ? slideIndex-1 : 2)
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2)
     }else{
       setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0) 
     }
-  }
+  };
+
   return (
     <div>
       <Container>
@@ -100,15 +102,15 @@ const Slider = () => {
 
               <Slide bg={item.bg} key={item.id}>
 
-              <ImgContainer>
-                <Image src = {item.img} />
-              </ImgContainer>
+                  <ImgContainer>
+                    <Image src = {item.img} />
+                  </ImgContainer>
 
-              <InfoContainer>
-                <Title>{item.title}</Title>
-                <Desc>{item.desc}</Desc>
-                <Button>SHOP NOW.</Button>
-              </InfoContainer>
+                  <InfoContainer>
+                    <Title>{item.title}</Title>
+                    <Desc>{item.desc}</Desc>
+                    <Button>SHOP NOW.</Button>
+                  </InfoContainer>
 
               </Slide>
           ))}
