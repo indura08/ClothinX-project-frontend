@@ -34,7 +34,7 @@ const Input = styled.input`
 
 const Left = styled.div`
   flex: 1;
-  display: flex;
+  display: flex;     
   align-items:center;
 `;
 const Center = styled.div`
