@@ -1,8 +1,10 @@
 import { CallOutlined, EmailOutlined, Facebook, Instagram, LocationOnOutlined, Pinterest, Twitter } from "@material-ui/icons"
 import styled from "styled-components"
+import { mobile } from "../responsive"
 
 const Container = styled.div`
     display: flex;
+    ${mobile({flexDirection: "column"})}
 `
 const Left = styled.div`
     flex:1;
@@ -38,6 +40,8 @@ const SocialIcon = styled.div`
 const Right = styled.div`
     flex:1;
     padding: 20px;
+    padding-left: 40px;
+    ${mobile({backgroundColor: "lightpink"})}
 `
 
 const ContactItem = styled.div`
@@ -55,6 +59,7 @@ const Payment = styled.img`
 const Center = styled.div`
     flex:1;
     padding: 20px;
+    ${mobile({display: "none"})}
 `
 
 const Title = styled.h3`
