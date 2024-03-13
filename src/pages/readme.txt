@@ -1,0 +1,1 @@
+this folder containes pages. those pages are the only pages of entire applicatin keep that in mind when opening it agin after long time
