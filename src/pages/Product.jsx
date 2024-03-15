@@ -144,7 +144,7 @@ const Product = () => {
       <Wrapper>
 
         <ImgContainer>
-            <Image src = "shirt2.png"/>
+            <Image src = "shirt1.png"/>
         </ImgContainer>
 
         <InfoContainer>
