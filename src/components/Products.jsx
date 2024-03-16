@@ -24,21 +24,22 @@ const Products = ({cat, filters, sort}) => {
           cat ? `http://localhost:5002/api/products/?category=${cat}` : "http://localhost:5002/api/products");
         
           setProducts(res.data);
-      }catch(err){
-        console.log(err);
-      }
+      }catch(err){}
     };
     getProducts()
 
   } , [cat]); //this means "when the cxategory changes just run this function"
 
   useEffect(() => {
-    cat && setFilteredProducts(
-      products.filter(item => Object.entries(filters).every(([key,value]) => 
-      
-      item[key].includes(value)
-    ))
-    )
+    if (products.length > 0) {
+      setFilteredProducts(
+        products.filter((item) =>
+          Object.entries(filters).every(([key, value]) =>
+            item[key].includes(value)
+          )
+        )
+      );
+    }
   } , [products, cat, filters]);
 
   return (
