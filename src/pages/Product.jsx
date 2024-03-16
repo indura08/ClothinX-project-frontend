@@ -1,5 +1,5 @@
 // this is the inteface for a single product please keep hat in mid when making changes 
-
+import { useLocation } from "react-router-dom"
 import styled from "styled-components"
 import Navbar from "../components/Navbar"
 import Announcement from "../components/Announcement"
@@ -7,6 +7,10 @@ import Newsletter from "../components/Newsletter"
 import Footer from "../components/Footer"
 import { Add, CheckBoxOutlined, Remove } from "@material-ui/icons"
 import { mobile } from "../responsive"
+import { useEffect, useState } from "react"
+import { publicRequest } from "../requestMethods"
+import { useDispatch } from "react-redux"
+import { addProduct } from "../Redux/cartRedux"
 
 const Container = styled.div``
 
@@ -137,6 +141,43 @@ const AboutPharagraph =  styled.div`
 const Text = styled.p``;
 
 const Product = () => {
+    const location = useLocation();
+    const id = (location.pathname.split("/")[2]);
+    const [products,setProducts] = useState({});   
+    
+    useEffect(() => {
+        const getProducts =async () => {
+            try{
+                const res = await publicRequest.get("/products/find/" + id);
+                setProducts(res.data);
+            }catch(err){
+
+            }
+        }
+        getProducts
+    } , [id]);
+
+    const[qty, setQty] = useState(1);
+    const[size, setSize] = useState("");
+    const[color, setColor] = useState("");
+    const dispatch = useDispatch()
+
+    const increaseQty = () => {
+        setQty(q => q +1);
+    }
+
+    const decreaseQty = () => {
+        if(qty > 1){
+            setQty(q => q-1);
+        }
+    }
+
+    const handleAddtoCartClick = () => {
+        dispatch(
+            addProduct({...products , qty,color,size})
+        )
+         
+    }
   return (
     <Container>
       <Navbar/> 
@@ -144,41 +185,38 @@ const Product = () => {
       <Wrapper>
 
         <ImgContainer>
-            <Image src = "shirt1.png"/>
+            <Image src = {products.img}/>
         </ImgContainer>
 
         <InfoContainer>
-            <Title>Long sleeve shirt</Title>
-            <Desc>Introducing Anationz Printed Linen Shirt Range - the epitome of style and comfort. Crafted with utmost care and attention to detail, these shirts are designed to elevate your wardrobe and make a lasting impression.
-</Desc>
-            <Price>Rs.4499.20/=</Price>
+            <Title>{products.title}</Title>
+            <Desc>{products.des}</Desc>
+            <Price>{products.price}</Price>
             <FilterContainer>
                 <Filter>
                     <FilterTitle>Color</FilterTitle>
-                    <FilterColor color = "black"/>
-                    <FilterColor color = "darkblue"/> 
-                    <FilterColor color = "grey"/>
+                    {products.color && products.color.map((c) => (
+                        <FilterColor color={c} key={c} onClick = {() => setColor(c)}/>
+                    ))}
                 </Filter>
 
                 <Filter>
                     <FilterTitle>Size</FilterTitle>
-                    <FilterSize>
-                        <FilterSizeOption>X</FilterSizeOption>
-                        <FilterSizeOption>S</FilterSizeOption>
-                        <FilterSizeOption>M</FilterSizeOption>
-                        <FilterSizeOption>L</FilterSizeOption>
-                        <FilterSizeOption>XL</FilterSizeOption>
+                    <FilterSize onChange={(e) => setSize(e.target.value)}>
+                        {products.size && products.size.map((s) => (
+                            <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                        ))}
                     </FilterSize>
                 </Filter>
 
             </FilterContainer>
             <AddContainer>
                 <AmountContainer> 
-                    <Remove/>
-                    <Amount>1</Amount>
-                    <Add/>
+                    <Remove onClick = {decreaseQty}/>
+                    <Amount>{qty}</Amount>
+                    <Add onClick = {increaseQty}/>
                 </AmountContainer>
-                <Button>ADD TO CART</Button>
+                <Button onClick = {handleAddtoCartClick}>ADD TO CART</Button>
                 <Button>BUY IT NOW</Button>
 
                 <AboutPharagraph>
