@@ -66,7 +66,8 @@ const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-left: 20px;
-  ${mobile({fontSize: "12px" , marginLeft: "10px"})}
+  texrt-decoration: none;
+  ${mobile({fontSize: "12px" , marginLeft: "10px"})};
 
 `;
 const Navbar = () => {
@@ -84,8 +85,14 @@ const Navbar = () => {
         <Center><Logo>ClothinX.</Logo></Center>
         <Right>
 
+            <Link to = "/register">
             <MenuItem>REGISTER</MenuItem>
+            </Link>
+            
+            <Link to = "/login">
             <MenuItem>SIGN IN</MenuItem>
+            </Link>
+            
             <Link to = "/cart"> 
             
             <MenuItem>

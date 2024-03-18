@@ -5,6 +5,15 @@ import Footer from "../components/Footer"
 import { Add, Remove } from "@material-ui/icons"
 import Newsletter from "../components/Newsletter"
 import { mobile } from "../responsive"
+import { useSelector } from "react-redux"
+import StripeCheckout from "react-stripe-checkout"
+import { useState, useEffect } from "react"
+import { userRequest } from "../requestMethods"
+import { useNavigate } from "react-router-dom";
+
+
+const KEY = import.meta.env.REACT_APP_STRIPE; // methana hodt mathk thiygnna node js wala di api proces.env kiyla gtatta vite ekn react application ekak ghddi ehma bha , ekat use krnna one import.meta.env kiyla
+// saha .env files github ho wena onema version control system ekkt push krnne nha mokd ewaye thiynwa project ekt adlala sensitive data
 
 const Container = styled.div``
 const Wrapper = styled.div`
@@ -180,6 +189,33 @@ const Button = styled.button`
 
 
 const Cart = () => {
+
+    const cart = useSelector(state => state.cart);
+    const [stripeToken, setStripeToken] = useState(null)
+    const navigate = useNavigate(); // use hsitory eka use krnna hduwa hari giye nha eki useNavigate ekn yanne , use History ekeiuseNavigate eki wenaskma blnna project ek iwar wela
+
+
+    const onToken = (token) => {
+        setStripeToken(token);
+    }
+
+    useEffect(() => {
+        const makeRequest = async () => {
+            try{
+                const res = await userRequest.post( "/checkout/payment" , {
+                    tokenId: stripeToken.id,
+                    amount: 500,
+                });
+
+                navigate("/sucess")
+            }
+            catch{
+
+            }
+        }
+        stripeToken && makeRequest();
+    } , [stripeToken, cart.total, history])
+    //console.log(cart.products[0].img)
   return (
     <Container>
       <Navbar/>
@@ -198,16 +234,17 @@ const Cart = () => {
         <Bottom>
 
             <Info>
-                <Product>
+                {cart.products.map((product) => (
+                    <Product>
 
                     <ProductDetails>
-                        <Image src = "shoe1.png"/>
+                        <Image src = {product.img}/>
 
                         <Details>
-                            <ProductName><b>Product: </b>Nike shoe sneakers</ProductName>
-                            <ProductId><b>Id: </b>998rt4</ProductId>
-                            <ProductColor color = "Black"/>
-                            <ProductSize><b>Size: </b>37.5</ProductSize>
+                            <ProductName><b>Product: </b>{product.title}</ProductName>
+                            <ProductId><b>Id: </b>{product._id}</ProductId>
+                            <ProductColor color = {product.color}/>
+                            <ProductSize><b>Size: </b>{product.size}</ProductSize>
                         </Details>
 
                     </ProductDetails>
@@ -215,45 +252,22 @@ const Cart = () => {
                     <PriceDetail>
                         <ProductAmountContainer>
                             <Add/>
-                            <ProductAmount>2</ProductAmount>
+                            <ProductAmount>{product.quantity}</ProductAmount>
                             <Remove/>
                         </ProductAmountContainer>
-                        <ProductPrice>Rs.9750.50/=</ProductPrice>
+                        <ProductPrice>{product.price * product.quantity}</ProductPrice>
                     </PriceDetail>
 
                 </Product>
+                ))}
                 <Hr/>
-                <Product>
-
-                    <ProductDetails>
-                        <Image src = "shoe2.png"/>
-
-                        <Details>
-                            <ProductName><b>Product: </b>Nike Air force</ProductName>
-                            <ProductId><b>Id: </b>223PAWG22</ProductId>
-                            <ProductColor color = "brown"/>
-                            <ProductSize><b>Size: </b>37.5</ProductSize>
-                        </Details>
-
-                    </ProductDetails>
-
-                    <PriceDetail>
-                        <ProductAmountContainer>
-                            <Add/>
-                            <ProductAmount>2</ProductAmount>
-                            <Remove/>
-                        </ProductAmountContainer>
-                        <ProductPrice>Rs.9750.50/=</ProductPrice>
-                    </PriceDetail>
-
-                </Product>
 
             </Info>
             <Summery>
                 <SummeryTitle>ORDER SUMMERY</SummeryTitle>
                 <SummeryItem>
                     <SummeryItemText>SubTotal</SummeryItemText>
-                    <SummeryItemPrice>Rs.19501.00/=</SummeryItemPrice>
+                    <SummeryItemPrice>Rs.{cart.total}/=</SummeryItemPrice>
                 </SummeryItem>
 
                 <SummeryItem>
@@ -268,10 +282,20 @@ const Cart = () => {
 
                 <SummeryItem type="total">
                     <SummeryItemText>Total</SummeryItemText>
-                    <SummeryItemPrice>Rs.19641.00</SummeryItemPrice>
+                    <SummeryItemPrice>Rs. {cart.total}</SummeryItemPrice>
                 </SummeryItem>
-
-                <Button>CHECKOUT NOW!!</Button>
+                <StripeCheckout
+                    name="ClothinX"
+                    image
+                    billingAddress
+                    shippingAddress
+                    description = {"your total is $${cart.total}"}
+                    amount={cart.total*100}
+                    token={onToken}
+                    stripeKey = {KEY}>
+                        <Button>CHECKOUT NOW!!</Button>
+                </StripeCheckout>
+                
             </Summery>
         </Bottom>
       </Wrapper>

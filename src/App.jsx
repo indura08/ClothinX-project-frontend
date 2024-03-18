@@ -8,18 +8,20 @@ import Login from './pages/Login'
 import Cart from './pages/Cart'
 import { BrowserRouter as Router, Routes, Navigate,
           Route,
-          Link
+          Link,
   } from "react-router-dom"  //me tika aniwartyenma import wenna one eka mathk thiygnna aaye balddi unath
-
+import Sucess from './pages/Sucess'
+import { useSelector } from 'react-redux'
 
 function App() {
-  const user = true;
+  const user = false;
   //meka switch walin ynna hitiye switch ekata adalawa react-router-dom eke awlk thibba hinda me widiyt routes haraha yanna baluwa
   return (
+
     <Router>
       <Routes>
         <Route exact path = "/" element = {<Home/>}/> {/* methna exact kiyla daanne  nattnm me widiyt slash eken patn ganna anik link load wenne nha me home ekami ewatath load wenne */}
-        <Route path = "/products/:category" element = {<ProductList/>}/>
+        <Route path = "/products" element = {<ProductList/>}/>
         <Route path = "/product/:id" element = {<Product/>}/>
         <Route path = "/cart" element = {<Cart/>}/>
         <Route path = "/login" element = {
@@ -30,6 +32,8 @@ function App() {
           ) : <Login/>
         }/>
         <Route path = "/register" element = {<Register/>}/>
+        <Route path = "/sucess" element = {<Sucess/>}/>
+        
       </Routes>
     </Router>
   )

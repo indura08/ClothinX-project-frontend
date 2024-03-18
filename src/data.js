@@ -1,3 +1,7 @@
+import category1 from "./assets/categories1.png"
+import category2 from "./assets/categoryies2.jpg"
+import category3 from "./assets/categories3.jpg"
+
 export const sliderItems = [
     {
         id: 1,
@@ -27,20 +31,20 @@ export const sliderItems = [
 export const categories = [
     {
       id: 1,
-      img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      img: category1,
       title: "SHIRT STYLE!",
       cat: "Shirts"
     },
     {
       id: 2,
-      img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "LOUNGEWEAR LOVE",
+      img: category2,
+      title: "TROUSERS AND SHORTS",
       cat: "Bottoms",
     },
     {
       id: 3,
-      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      title: "LIGHT JACKETS",
+      img: category3,
+      title: "SHOES? WE GOT IT",
       cat: "footware",
     },
   ];

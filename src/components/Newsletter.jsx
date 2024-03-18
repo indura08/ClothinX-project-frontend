@@ -40,6 +40,11 @@ const Button = styled.button`
     background-color: #2F3DFF;
     color: white;
     cursor: pointer;
+    transition: 1s ease-out;
+
+    &:hover{
+      opacity:0.8;
+    }
 `
 
 function Newsletter() {

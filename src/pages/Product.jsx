@@ -11,6 +11,9 @@ import { useEffect, useState } from "react"
 import { publicRequest } from "../requestMethods"
 import { useDispatch } from "react-redux"
 import { addProduct } from "../Redux/cartRedux"
+import StripeCheckout from "react-stripe-checkout";
+
+
 
 const Container = styled.div``
 
@@ -143,18 +146,20 @@ const Text = styled.p``;
 const Product = () => {
     const location = useLocation();
     const id = (location.pathname.split("/")[2]);
-    const [products,setProducts] = useState({});   
+    const [products,setProducts] = useState([]);   
     
     useEffect(() => {
         const getProducts =async () => {
             try{
                 const res = await publicRequest.get("/products/find/" + id);
-                setProducts(res.data);
+                setProducts(res.data.product);
+                console.log(typeof products);
+                console.log(products.img);
             }catch(err){
 
             }
         }
-        getProducts
+        getProducts();
     } , [id]);
 
     const[qty, setQty] = useState(1);
@@ -190,8 +195,8 @@ const Product = () => {
 
         <InfoContainer>
             <Title>{products.title}</Title>
-            <Desc>{products.des}</Desc>
-            <Price>{products.price}</Price>
+            <Desc>{products.desc}</Desc>
+            <Price>Rs.  {products.price}/=</Price>
             <FilterContainer>
                 <Filter>
                     <FilterTitle>Color</FilterTitle>

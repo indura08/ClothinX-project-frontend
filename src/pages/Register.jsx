@@ -82,7 +82,7 @@ const Register = () => {
                
             </Agreement>
             <Button>CREATE</Button>
-            <Button>RESET</Button>
+            <Button type = "reset">RESET</Button>
         </Form>
       </Wrapper>
     </Container>
