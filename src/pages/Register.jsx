@@ -1,6 +1,8 @@
 import { ErrorOutline } from "@material-ui/icons"
 import styled from "styled-components"
 import { mobile } from "../responsive"
+import axios from "axios"
+import { useState } from "react"
 // background: linear-gradient(
 //     rgba(255,255,255,0.5),
 //      rgba(255, 255,255,0.5)
@@ -64,18 +66,55 @@ const Button = styled.button`
 }
 `
 
+
+const SuccessText = styled.p`
+    color: green;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 10px;
+`
+
+const UnSucessText = styled.p`
+    color: red;
+    font-size: 15px;
+    font-weight: 400;
+    margin-top: 20px;
+`
+
 const Register = () => {
+
+    const [username , setUsername] = useState("");
+    const [password , setPassword] = useState("");
+    const [email , setEmail] = useState("");
+    const [success, setSuccess] = useState(false);
+    const [error , setError] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+            const res = await axios.post("http://localhost:5002/api/auth/register" , { username, email, password } )
+            console.log(res.data);
+            setSuccess(true);
+            setError(false);
+            
+        }catch(err){
+            console.log(err);
+            setError(true);
+            setSuccess(false);
+
+        }
+    }
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-            <Input placeholder = "firstname"/>
-            <Input placeholder = "lastname"/>
-            <Input placeholder = "select a username"/>
-            <Input placeholder = "email"/>
-            <Input placeholder = "password"/>
-            <Input placeholder = "confirm password"/>
+        <Form onSubmit={handleSubmit}>
+            <Input name="name" placeholder = "firstname"/>
+            <Input name = "lname"placeholder = "lastname"/>
+            <Input name = "username" placeholder = "select a username" onChange={(e) => setUsername(e.target.value)} />
+            <Input name = "email" placeholder = "email" onChange={(e) => setEmail(e.target.value)}/>
+            <Input name = "password" placeholder = "password" onChange={(e) => setPassword(e.target.value)}/>
+            <Input name = "cpassword" placeholder = "confirm password"/>
             <Agreement>
                 <ErrorOutline/> By creating an account, I consent to the processing of my personal data in accordance with the
                     PRIVACY POLICY
@@ -83,6 +122,9 @@ const Register = () => {
             </Agreement>
             <Button>CREATE</Button>
             <Button type = "reset">RESET</Button>
+
+            {success && <SuccessText>Successfully created Your account</SuccessText> }
+            {error && <UnSucessText>An error Happened, Try again later</UnSucessText>}
         </Form>
       </Wrapper>
     </Container>

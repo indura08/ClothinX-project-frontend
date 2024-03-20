@@ -191,7 +191,7 @@ const Button = styled.button`
 const Cart = () => {
 
     const cart = useSelector(state => state.cart);
-    const [stripeToken, setStripeToken] = useState(null)
+    const [stripeToken, setStripeToken] = useState(null);
     const navigate = useNavigate(); // use hsitory eka use krnna hduwa hari giye nha eki useNavigate ekn yanne , use History ekeiuseNavigate eki wenaskma blnna project ek iwar wela
 
 
@@ -202,7 +202,7 @@ const Cart = () => {
     useEffect(() => {
         const makeRequest = async () => {
             try{
-                const res = await userRequest.post( "/checkout/payment" , {
+                const res = await userRequest.post("/checkout/payment" , {
                     tokenId: stripeToken.id,
                     amount: 500,
                 });

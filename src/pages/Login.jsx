@@ -3,6 +3,7 @@ import { mobile } from "../responsive"
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { login } from "../Redux/apiCalls" 
+import axios from "axios"
 
 const Container = styled.div`
     width: 100vw;
@@ -69,15 +70,30 @@ const Error = styled.span`
 `
 
 const Login = () => {
-  const [userName, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState(""); 
   const dispatch = useDispatch();
   const {isFetching , error} = useSelector((state) => state.user);
+  //const [error, setError] = useState(false);
+
 
   const handleClick = (e) => {
     e.preventDefault();
-    login(dispatch, { userName, password });
+    login(dispatch, { username, password });
   };
+
+  // const handleClick2 = async (e) => {
+  //   e.preventDefault();
+  //   try{
+  //     const res = await axios.post("http://localhost:5002/api/auth/login" , { username, password });
+  //     console.log(res);
+      
+  //   }catch(err){
+  //     console.log("login failed" ,err);
+  //     setError(true);
+  //   }
+  // }
+
 
   
   return (
@@ -88,7 +104,7 @@ const Login = () => {
             <Input placeholder = "Username" onChange={(e) => setUsername(e.target.value)}/>
             <Input type = "password" placeholder = "Password" onChange={(e) => setPassword(e.target.value)}/>
            
-            <Button onClick={handleClick} disabled = {isFetching}>LOGIN</Button>
+            <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
             {error && <Error>Something Went wrong..</Error>}
             <Link>FORGOT PASSWORD?</Link>
             <Link>CREATE NEW ACCOUNT</Link>
@@ -99,3 +115,7 @@ const Login = () => {
 }
 
 export default Login
+
+//hodt mathk thiygnna meke login unain passe aphu page eka refresh krhama login una eka ain wela aphu log wenna puluwan thathweta web application eka pathwenwa
+//eka nwattagnna thami redux persist one , redux persist balagnna mathk krla
+//TODO: exercise ekk widiyt meke persist wenna one than tika hdnna
