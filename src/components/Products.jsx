@@ -13,24 +13,30 @@ const Container = styled.div`
 
 const Products = ({cat, filter, sort}) => {
 
-  //filter = {};
+  //console.log(cat,filter,sort);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+ 
 
   useEffect(() => {
 
     const getProducts = async () => {
       try{
         const res = await axios.get(
-          cat ? `http://localhost:5002/api/products/?category=${cat}` : "http://localhost:5002/api/products");
-          setProducts(Object.values(res.data));
-          console.log(products)
+          cat ? `http://localhost:5002/api/products?category=${cat}` : "http://localhost:5002/api/products");
+          const  newProducts = Object.values(res.data);
+          setProducts(newProducts[0]);
+          console.log(products);
       }catch(err){}
     };
     getProducts();
 
   } , [cat]); //this means "when the cxategory changes just run this function"
 
+  
+
+  //const newProducts = products[0]; //**methaninui hadune array ekethibba awla mekedi kale product.map is not a function kiyla watuna, e wateddi console.log ekn bluwa console ekt gihilla product eka array ekkd nadda kiyla . product eka array ekek wenne nha mokd api eken fetch wenne objcet ekak eka useState ekedi products array ekt watunam products array ekath automa object ekk wenwa . e hinda product array ekata object ekan ena dewal array ekak widiyt argena damma arrays dekk enwa product ekat. ekak awilla prototype kiyla ekak anika apita one krna detail thiyna oject eka.eken product[0] thamai apita one detail thiynne. eka aran damma newProducts array ekt. e newProducts array eka use kra items tika render krgnna gann
+  console.log(products)
   useEffect(() => {
     cat &&
       setFilteredProducts(
@@ -55,16 +61,20 @@ const Products = ({cat, filter, sort}) => {
   } , [sort]);
 
 
-  const newProducts = products[0]; //**methaninui hadune array ekethibba awla mekedi kale product.map is not a function kiyla watuna, e wateddi console.log ekn bluwa console ekt gihilla product eka array ekkd nadda kiyla . product eka array ekek wenne nha mokd api eken fetch wenne objcet ekak eka useState ekedi products array ekt watunam products array ekath automa object ekk wenwa . e hinda product array ekata object ekan ena dewal array ekak widiyt argena damma arrays dekk enwa product ekat. ekak awilla prototype kiyla ekak anika apita one krna detail thiyna oject eka.eken product[0] thamai apita one detail thiynne. eka aran damma newProducts array ekt. e newProducts array eka use kra items tika render krgnna gann
-
+  
+  console.log(filteredProducts)
   return (
     <Container>
-      {cat && Object.keys(filteredProducts).map((item) => (
+      {cat && filteredProducts.map((item) => (
         <Product item={item} key={item.id} />
       ))}
-      {!cat && Array.isArray(newProducts) && newProducts.slice(0, 12).map((item) => (
+      {!cat && Array.isArray(products) && products.slice(0, 15).map((item) => (
         <Product item={item} key={item._id} />
       ))}
+
+      {/* {filteredProducts.map((item) => (
+        <Product item = {item} key = {item.id}/>
+      ) )}  "this was used for debugging purposes" */}
     </Container>
   )
 }
