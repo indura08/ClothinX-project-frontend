@@ -37,7 +37,7 @@ function App() {
           ) : <Login/>
         }/>
         <Route path = "/register" element = {<Register/>}/>
-        <Route path = "/sucess" element = {<Sucess/>}/>
+        <Route path = "/success" element = {<Sucess/>}/>
         
       </Routes>
     </Router>
