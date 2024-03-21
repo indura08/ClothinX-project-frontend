@@ -207,15 +207,26 @@ const Cart = () => {
                     amount: 500,
                 });
 
-                navigate("/sucess")
+                navigate("http://localhost:5173/success");
             }
             catch{
 
             }
         }
         stripeToken && makeRequest();
-    } , [stripeToken, cart.total, history])
-    //console.log(cart.products[0].img)
+    } , [stripeToken, cart.total, navigate]);
+
+    console.log(typeof cart.products[0].price);
+
+    //line 221 to 228 is for debugging purposes 
+    let TotalDebug = 0;
+
+    for(let i = 0 ;  i< cart.products.length; i++){
+        TotalDebug += Number(cart.products[i].price) ;
+    }
+    console.log()
+    console.log(cart.products.length)
+    console.log(TotalDebug)
   return (
     <Container>
       <Navbar/>
@@ -226,8 +237,8 @@ const Cart = () => {
 
             <TopButton>CONTINUE SHOPPING</TopButton>
             <TopTexts>
-                <TopText>Shopping Bag(2)</TopText>
-                <TopText>Your wishlist(0)</TopText> 
+                <TopText>Shopping Bag</TopText>
+                <TopText>Your wishlist</TopText> 
             </TopTexts>
             <TopButton>CHECKOUT NOW!</TopButton>
         </Top>
@@ -267,7 +278,7 @@ const Cart = () => {
                 <SummeryTitle>ORDER SUMMERY</SummeryTitle>
                 <SummeryItem>
                     <SummeryItemText>SubTotal</SummeryItemText>
-                    <SummeryItemPrice>Rs.{cart.total}/=</SummeryItemPrice>
+                    <SummeryItemPrice>Rs.{TotalDebug}/=</SummeryItemPrice>
                 </SummeryItem>
 
                 <SummeryItem>
@@ -277,19 +288,19 @@ const Cart = () => {
 
                 <SummeryItem>
                     <SummeryItemText>Shipping Discount</SummeryItemText>
-                    <SummeryItemPrice>- Rs.90.00/=</SummeryItemPrice>
+                    <SummeryItemPrice>- Rs.230.00/=</SummeryItemPrice>
                 </SummeryItem>
 
                 <SummeryItem type="total">
                     <SummeryItemText>Total</SummeryItemText>
-                    <SummeryItemPrice>Rs. {cart.total}</SummeryItemPrice>
+                    <SummeryItemPrice>Rs. {TotalDebug} /=</SummeryItemPrice>
                 </SummeryItem>
                 <StripeCheckout
                     name="ClothinX"
                     image
                     billingAddress
                     shippingAddress
-                    description = {"your total is $${cart.total}"}
+                    description = {`your total is $${TotalDebug}`}
                     amount={cart.total*100}
                     token={onToken}
                     stripeKey = {KEY}>
