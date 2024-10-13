@@ -82,7 +82,7 @@ const Navbar = () => {
             <Search style={{color: "gray", fontSize: 20}}/>
           </SearchContainer>
         </Left>
-        <Center><Logo>ClothinX.</Logo></Center>
+        <Center><Logo><a href='/' style={{color:'inherit', textDecoration:'none'}}>ClothinX.</a></Logo></Center>
         <Right>
 
             <Link to = "/register">
@@ -109,4 +109,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar //nwattuwe 1:05:16
+export default Navbar 
