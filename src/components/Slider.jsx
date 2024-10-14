@@ -1,4 +1,4 @@
-import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons"
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material"
 import styled from "styled-components"
 import { useState } from "react"
 import { sliderItems } from "../data"

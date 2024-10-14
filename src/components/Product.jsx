@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { ShoppingCartOutlined, SearchOutlined, FavoriteBorderOutlined } from "@material-ui/icons"
+import { ShoppingCartOutlined, SearchOutlined, FavoriteBorderOutlined } from "@mui/icons-material"
 import { Link } from 'react-router-dom'
 
 const Info = styled.div`

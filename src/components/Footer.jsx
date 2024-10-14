@@ -1,4 +1,4 @@
-import { CallOutlined, EmailOutlined, Facebook, Instagram, LocationOnOutlined, Pinterest, Twitter } from "@material-ui/icons"
+import { CallOutlined, EmailOutlined, Facebook, Instagram, LocationOnOutlined, Pinterest, Twitter } from "@mui/icons-material"
 import styled from "styled-components"
 import { mobile } from "../responsive"
 
