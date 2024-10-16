@@ -135,6 +135,12 @@ const Footer = () => {
           <Payment src = "americanexpress.jpg"/>
 
         </Right>
+
+        <div>
+          <h1>
+            This text was added to check jenkins pipeline automation!!
+          </h1>
+        </div>
     </Container> 
   )
 }
