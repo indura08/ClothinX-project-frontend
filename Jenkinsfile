@@ -64,7 +64,7 @@ pipeline {
                     node_modules/.bin/netlify link --id=${NETLIFY_SITE_ID}
 
                     echo "deploying to production. Site id: ${NETLIFY_SITE_ID}"
-                    node_modules/.bin/netlify deploy --auth=${NETLIFY_AUTH_TOKEN} --dir=dist --prod
+                    node_modules/.bin/netlify deploy --auth=${NETLIFY_AUTH_TOKEN} --dir=dist --prod --skip-functions-cache --no-build
 
                 '''
             }
