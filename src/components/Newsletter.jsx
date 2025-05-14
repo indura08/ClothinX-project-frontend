@@ -52,7 +52,6 @@ function Newsletter() {
     <Container>
       <Title>Newsletter</Title>
       <Desc>Dont worry! there is a way to get timely updates of your favourite items and categories.</Desc>
-		This Line was added to test the pollSCM jenkins pipeline
       <InputContainer>
         <Input placeholder="your email"/>
         <Button>
