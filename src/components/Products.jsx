@@ -13,6 +13,8 @@ const Container = styled.div`
 
 const Products = ({cat, filter, sort}) => {
 
+  const apiUrl = process.env.API_URL
+
   //console.log(cat,filter,sort);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -23,7 +25,7 @@ const Products = ({cat, filter, sort}) => {
     const getProducts = async () => {
       try{
         const res = await axios.get(
-          cat ? `http://localhost:5002/api/products?category=${cat}` : "http://localhost:5002/api/products");
+          cat ? `http://${apiUrl}/products?category=${cat}` : `http://${apiUrl}/products`);
           const  newProducts = Object.values(res.data);
           setProducts(newProducts[0]);
           console.log(products);
