@@ -1,0 +1,73 @@
+pipeline{
+    agent any
+    environment{
+        NETLIFY_SITE_ID = credentials('clothinx-siteid')
+        NETLIFY_AUTH_TOKEN = credentials('clothinx-netlify-token')
+    }
+
+    triggers{
+        pollSCM('* * * * *')    //this allow this pileine to run every minute of anyday
+    }
+
+    stages{
+        stage('pullin / checkout'){
+            steps{
+                git branch: 'main', url: "https://github.com/indura08/ClothinX-project-frontend"
+            }
+        }
+
+        stage('build the project'){
+
+            steps{
+                sh '''
+                
+                    node --version
+                    npm --version
+                    npm install
+                    npm run build
+                
+                '''
+            }
+        }
+
+        stage('deploy'){
+            
+            steps{
+                sh '''
+                    
+                    npm install netlify-cli
+                    node_modules/.bin/netlify --version
+
+                    echo "Linking to Netlify site..."
+                    node_modules/.bin/netlify link --id=${NETLIFY_SITE_ID}
+
+                    echo "deploying to production. Site id: ${NETLIFY_SITE_ID}"
+                    node_modules/.bin/netlify deploy --auth=${NETLIFY_AUTH_TOKEN} --dir=dist --prod --skip-functions-cache --no-build
+
+
+                '''
+            }
+
+        }
+    }
+
+    post{
+
+        always{
+            echo 'Pipeline completed just check the exit code and do acordingly'
+        }
+
+        failure{
+            echo "pipeline failed! just check console output and make things right"
+        }
+
+        aborted{
+            echo "pipeline aborted! just check console output and make things right"
+        }
+
+        success{
+            echo "Pipeline has been successfully executed: check the we site to see weather the changes have been updated or not"
+        }
+    }
+}
+
